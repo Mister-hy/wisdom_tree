@@ -6,26 +6,32 @@
       <el-form :model="LoginruleForm">
         <el-form-item prop="username">
           <div class="user">
-            <el-input v-model="LoginruleForm.username" placeholder="请输入账号">
+            <el-input
+              v-model.trim="LoginruleForm.username"
+              placeholder="请输入账号"
+              suffix-icon="el-icon-user-solid"
+            >
             </el-input>
-            <span class="el-input__suffix">
+            <!-- <span class="el-input__suffix">
               <span class="el-input__suffix-inner">
                 <i class="el-input__icon el-icon-s-goods"></i>
               </span>
-            </span>
+            </span> -->
           </div>
         </el-form-item>
         <el-form-item prop="password">
           <div class="pwd">
             <el-input
-              v-model="LoginruleForm.password"
+              v-model.tirm="LoginruleForm.password"
               placeholder="请输入密码"
+              show-password
+              suffix-icon="el-icon-s-goods"
             ></el-input>
-            <span class="el-input__suffix">
+            <!-- <span class="el-input__suffix">
               <span class="el-input__suffix-inner">
                 <i class="el-input__icon el-icon-s-goods"></i>
               </span>
-            </span>
+            </span> -->
           </div>
         </el-form-item>
         <el-form-item prop="code">
@@ -45,7 +51,7 @@
                 cursor: pointer;
               "
             /> -->
-            <img :src="ImgList" alt="" class="imgC" @click="codeSelct">
+            <img :src="ImgList" alt="" class="imgC" @click="codeSelct" />
           </div>
         </el-form-item>
         <el-button type="danger">立即登录</el-button>
@@ -85,7 +91,7 @@ export default {
 
 <style lang="scss" scoped>
 .loginMain {
-  .el-button{
+  .el-button {
     width: 100%;
   }
   position: fixed;
@@ -170,7 +176,7 @@ export default {
         }
       }
     }
-    .el-form-item__content{
+    .el-form-item__content {
       overflow: hidden;
     }
     .codeC {
