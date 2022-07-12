@@ -3,7 +3,7 @@
     <h1>智慧服务平台</h1>
     <div class="main-agileinfo">
       <h2>欢迎登录</h2>
-      <el-form :model="LoginruleForm">
+      <el-form :model="LoginruleForm" :rules="rules" ref="from">
         <el-form-item prop="username">
           <div class="user">
             <el-input
@@ -51,39 +51,105 @@
                 cursor: pointer;
               "
             /> -->
-            <img :src="ImgList" alt="" class="imgC" @click="codeSelct" />
+            <img
+              :src="ImgList"
+              alt=""
+              class="imgC"
+              @click.stop="handleSelect"
+            />
           </div>
         </el-form-item>
-        <el-button type="danger">立即登录</el-button>
+        <el-button
+          type="danger"
+          @click="handleUserSubmit"
+          :loading="lodingStatus"
+          >{{ lodingStatus ? "登录中..." : "登录成功" }}</el-button
+        >
       </el-form>
     </div>
   </div>
 </template>
 
 <script>
-import { captcha } from "../../api/user";
+import { captcha, login } from "../../api/user";
+// import { mapActions } from "vuex";
 export default {
   data() {
     return {
+      // loding状态
+      lodingStatus: false,
+      // 验证码
       ImgList: "",
+      // form表单数据
       LoginruleForm: {
         username: "duck",
         password: "admin888",
         code: "",
         token: "",
       },
+      // rules表单校验
+      rules: {
+        username: [{ required: true, message: "请输入账号", trigger: "blur" }],
+        password: [{ required: true, message: "请输入密码", trigger: "blur" }],
+        code: [{ required: true, message: "请输入验证码", trigger: "blur" }],
+      },
     };
   },
   mounted() {
-    this.codeSelct();
+    this.handleCodeShow();
   },
   methods: {
-    async codeSelct() {
-      const { data } = await captcha(this.LoginruleForm);
-      console.log(data);
-      this.ImgList = data.captchaImg;
-      this.LoginruleForm.token = data.token;
+    /**
+     * 调用验证码接口
+     */
+    async handleCodeShow() {
+      const res = await captcha();
+      // console.log(res);
+      this.ImgList = res.data.captchaImg;
+      this.LoginruleForm.token = res.data.token;
+      // console.log(this.LoginruleForm.token);
     },
+    /**
+     * 验证码切换刷新
+     */
+    handleSelect() {
+      this.LoginruleForm.code = "";
+      this.handleCodeShow();
+    },
+    /**
+     * 登录表单校验
+     */
+    async handleUserSubmit() {
+      this.$refs.from.validate((valid) => {
+        if (valid) {
+          this.handleSubmitLogin();
+        }
+      });
+    },
+    /**
+     * 登录提交
+     */
+    async handleSubmitLogin() {
+      try {
+        const token = await login(this.LoginruleForm);
+        // console.log(token);
+        if (!token) return;
+        this.$store.dispatch("setLogin", login);
+        this.$notify({ title: "提示", message: "登录成功", type: "success" });
+        this.lodingStatus = true;
+        await this.$router.push("/");
+      } catch (err) {
+        console.log(err);
+      } finally {
+        this.lodingStatus = false;
+      }
+    },
+    /**
+     * 存到vuex
+     */
+    // ...mapActions({
+    //   login: "/user/login",
+    // }),
   },
   components: {},
 };

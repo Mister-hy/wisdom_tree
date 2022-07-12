@@ -2,7 +2,7 @@ import axios from "axios";
 
 const http = axios.create({
   baseURL: process.env.VUE_APP_BASE_URL,
-  timeout: 1000,
+  timeout: 10000,
 });
 
 //axios设置请求拦截器
