@@ -7,15 +7,15 @@ export default {
     token: getItem("token") || [],
   },
   mutations: {
-    MU_TOKEN(state, token) {
+    setToken(state, token) {
       state.token = token;
       setItem("token", token);
     },
   },
   actions: {
-    async setLogin({ commit }, params) {
-      const token = await login(params);
-      commit("MU_TOKEN", token);
+    async login({ commit }, loginForm) {
+      const token = await login(loginForm);
+      commit("setToken", token);
       return token;
     },
   },

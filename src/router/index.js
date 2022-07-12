@@ -7,8 +7,26 @@ const routes = [
   {
     path: "/login",
     name: "login",
-    component: () =>
-      import("../views/login/index.vue"),
+    component: () => import("../views/login/index.vue"),
+  },
+  {
+    path: "/",
+    name: "layout",
+    redirect: "/profile",
+    component: () => import("../layout"),
+    children: [
+      {
+        path: "/profile",
+        name: "profile",
+        component: () => import("../views/profile/index.vue"),
+      },
+      {
+        path: "/404",
+        name: "404",
+        component: () => import("../views/404/index.vue"),
+      },
+      { path: "*", redirect: "/404", hidden: true },
+    ],
   },
 ];
 

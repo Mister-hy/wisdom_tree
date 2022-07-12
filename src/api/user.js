@@ -10,3 +10,7 @@ export const login = (data) => {
     data,
   });
 };
+
+export const menuList = () => {
+  return http({ url: "/menu/list", method: "GET" });
+};

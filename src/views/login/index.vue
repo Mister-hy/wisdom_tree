@@ -134,7 +134,8 @@ export default {
         const token = await login(this.LoginruleForm);
         // console.log(token);
         if (!token) return;
-        this.$store.dispatch("setLogin", login);
+        
+        9("login", this.LoginruleForm);
         this.$notify({ title: "提示", message: "登录成功", type: "success" });
         this.lodingStatus = true;
         await this.$router.push("/");
@@ -148,7 +149,7 @@ export default {
      * 存到vuex
      */
     // ...mapActions({
-    //   login: "/user/login",
+    //   login: "user/login",
     // }),
   },
   components: {},
