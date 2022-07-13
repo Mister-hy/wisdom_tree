@@ -14,3 +14,25 @@ export const login = (data) => {
 export const menuList = () => {
   return http({ url: "/menu/list", method: "GET" });
 };
+
+/**
+ * 获取用户信息接口
+ * @returns {AxiosPromise}
+ */
+export const getUserInfo = () => {
+  return request({
+    url: "/user/info",
+    method: "GET",
+  });
+};
+
+/**
+ * 获取用户权限接口
+ * @returns {AxiosPromise}
+ */
+export const getPermissionList = () => {
+  return request({
+    url: "/menu/nav",
+    method: "GET",
+  });
+};

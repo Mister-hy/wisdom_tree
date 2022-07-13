@@ -104,9 +104,9 @@ export default {
      */
     async handleCodeShow() {
       const res = await captcha();
-      // console.log(res);
-      this.ImgList = res.data.captchaImg;
-      this.LoginruleForm.token = res.data.token;
+      console.log(res);
+      this.ImgList = res.captchaImg;
+      this.LoginruleForm.token = res.token;
       // console.log(this.LoginruleForm.token);
     },
     /**
@@ -135,7 +135,7 @@ export default {
         // console.log(token);
         if (!token) return;
         
-        9("login", this.LoginruleForm);
+        this.$store.dispatch("login", this.LoginruleForm);
         this.$notify({ title: "提示", message: "登录成功", type: "success" });
         this.lodingStatus = true;
         await this.$router.push("/");

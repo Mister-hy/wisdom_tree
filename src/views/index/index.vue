@@ -1,9 +1,10 @@
 <template>
-  <div class="profile"></div>
+  <div>控制台</div>
 </template>
 
 <script>
 export default {
+  name: "index",
   data() {
     return {};
   },
@@ -13,4 +14,4 @@ export default {
 };
 </script>
 
-<style lang="scss" scoped></style>
+<style lang="scss"></style>
